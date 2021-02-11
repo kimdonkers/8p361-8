@@ -1,3 +1,4 @@
 AUC score      = 0.49946657031249997
 F1 score       = 0.4776686313032089
 Accuracy score = 0.5015
+Accuracy (model.evaluate) = 0.8475000262260437
