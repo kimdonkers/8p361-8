@@ -26,6 +26,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 # Load Numpy, Matplotlib and XlsxWriter libraries
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 import xlsxwriter
 
 # Constant definitions
@@ -91,6 +92,55 @@ def plot_ROC_curve(fpr, tpr, folder, model_name):
     ax.set_xlabel('False positive rate')
     ax.set_ylabel('True positive rate')
     fig.savefig(os.path.join(folder, model_name + "_ROC_curve"))
+
+################################################################################
+
+def plot_history(history, folder, model_name):
+    """
+    DESCRIPTION: This function plots the accuracies and losses of the model and
+    saves this to two images files.
+
+    Parameters:
+    ----------
+    history: the history dictionary resulting from model.fit
+    folder: the folder to save to
+    model_name: the name to be included in the filename.
+
+    Returns
+    -------
+    None
+    """
+    # Make the first figure
+    fig1, ax1 = plt.subplots()
+
+    # Plot the accuracy curves
+    ax1.plot(history['val_accuracy'], color='orange', linewidth=1, label='Validation accuracy')
+    ax1.plot(history['accuracy'], color='royalblue', linewidth=1, label='Training accuracy')
+
+    # Style plot and save to file
+    ax1.set_xlim([0, len(history['val_accuracy'])-1])
+    ax1.set_ylim([0,1])
+    ax1.set_xlabel('Nr of epochs')
+    ax1.set_ylabel('Accuracy')
+    ax1.legend()
+    ax1.xaxis.set_major_locator(MaxNLocator(integer=True))
+    fig1.savefig(os.path.join(folder, model_name + "_accuracy_history"), bbox_inches='tight')
+
+    # Make the second figure
+    fig2, ax2 = plt.subplots()
+
+    # Plot the accuracy curves
+    ax2.plot(history['val_loss'], color='orange', linewidth=1, label='Validation loss')
+    ax2.plot(history['loss'], color='royalblue', linewidth=1, label='Training loss')
+
+    # Style plot and save to file
+    ax2.set_xlim([0, len(history['val_loss'])-1])
+    ax2.set_ylim([0, 1])
+    ax2.set_xlabel('Nr of epochs')
+    ax2.set_ylabel('Loss')
+    ax2.legend()
+    ax2.xaxis.set_major_locator(MaxNLocator(integer=True))
+    fig2.savefig(os.path.join(folder, model_name + "_loss_history"), bbox_inches='tight')
 
 ################################################################################
 

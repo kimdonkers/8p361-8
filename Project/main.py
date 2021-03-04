@@ -32,7 +32,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Load functions from other files
-from utils import plot_ROC_curve, get_generators, save_history
+from utils import plot_ROC_curve, get_generators, save_history, plot_history
 import models
 
 # constant definitions
@@ -110,7 +110,8 @@ def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=10, 
     acc = accuracy_score(val_gen.labels, y_pred_bin)
 
     # Save results
-    save_history(history, model_name, save_folder)
+    save_history(history.history, model_name, save_folder)
+    plot_history(history.history, model_name, save_folder)
     plot_ROC_curve(fpr,tpr, save_folder, model_name)
     with open(os.path.join(save_folder, model_name + '_scores.txt'), 'w') as result_file:
         result_file.write('AUC score      = {}\n'.format(auc_score))
@@ -121,5 +122,14 @@ def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=10, 
 ################################################################################
 
 if __name__ == "__main__":
-    model1 = models.CNN_01(32, 64, SGD, lr=0.01, momentum=0.95)  # default
+    # SHORT TEST
+    test = models.CNN_01(2, 4, optimizer=SGD, lr=0.01, momentum=0.95)  # default
+    train_and_evaluate(test, 'test', save_folder = SAVE_PATH, train_fraction=0.01, val_fraction=0.1)
+
+    # BASELINE
+    model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
     train_and_evaluate(model1, 'model_01', save_folder = SAVE_PATH)
+
+    # EXTRA CONV + MP LAYER
+    model2 = models.CNN_02(32, 32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
+    train_and_evaluate(model1, 'model_02', save_folder = SAVE_PATH)
