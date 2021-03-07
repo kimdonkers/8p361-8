@@ -95,7 +95,7 @@ def plot_ROC_curve(fpr, tpr, folder, model_name):
 
 ################################################################################
 
-def plot_history(history, folder, model_name):
+def plot_history(history, model_name, folder='./'):
     """
     DESCRIPTION: This function plots the accuracies and losses of the model and
     saves this to two images files.
