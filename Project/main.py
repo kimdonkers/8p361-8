@@ -37,9 +37,9 @@ import models
 
 # constant definitions
 IMAGE_SIZE  = 96
-DATA_PATH   = '../../data/';
-SAVE_PATH   = '../results/';
-TB_LOG_PATH = '../TB_logs';
+DATA_PATH   = '../../data/'
+SAVE_PATH   = '../results/'
+TB_LOG_PATH = '../TB_logs'
 
 ################################################################################
 
@@ -74,8 +74,8 @@ def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=10, 
     train_gen, val_gen, val_gen_no_shuffle = get_generators(DATA_PATH)
 
     # Define filepaths to save the model and weights
-    model_filepath = os.path.join(save_folder, model_name + '.json');
-    weights_filepath = os.path.join(save_folder, model_name + '_weights.hdf5');
+    model_filepath = os.path.join(save_folder, model_name + '.json')
+    weights_filepath = os.path.join(save_folder, model_name + '_weights.hdf5')
 
     # Save the model to a .json file
     model_json = model.to_json()
@@ -132,4 +132,8 @@ if __name__ == "__main__":
 
     # EXTRA CONV + MP LAYER
     model2 = models.CNN_02(32, 32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    train_and_evaluate(model1, 'model_02', save_folder = SAVE_PATH)
+    train_and_evaluate(model2, 'model_02', save_folder = SAVE_PATH)
+
+    # EXTRA CONV IN EACH LAYER
+    model3 = models.CNN_03(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
+    train_and_evaluate(model3, 'model_03', save_folder = SAVE_PATH)

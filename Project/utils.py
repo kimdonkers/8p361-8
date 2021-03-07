@@ -161,7 +161,7 @@ def save_history(history, model_name, save_folder='./'):
 
     """
     # Get the datetime for an overall filename
-    filename = os.path.join(save_folder, model_name + '_history.xlsx');
+    filename = os.path.join(save_folder, model_name + '_history.xlsx')
 
 
     # Save the loss/accuracy history to a xlsx file
@@ -172,14 +172,14 @@ def save_history(history, model_name, save_folder='./'):
     worksheet.write('C1', 'val_acc')
     worksheet.write('D1', 'train_loss')
     worksheet.write('E1', 'train_acc')
-    line = 1;
+    line = 1
     for i in range(len(history['val_loss'])):
         worksheet.write(line, 0, i+1)
         worksheet.write(line, 1, history['val_loss'][i])
         worksheet.write(line, 2, history['val_accuracy'][i])
         worksheet.write(line, 3, history['loss'][i])
         worksheet.write(line, 4, history['accuracy'][i])
-        line += 1;
+        line += 1
     workbook.close()
 
 ################################################################################
