@@ -23,7 +23,7 @@ from tensorflow.keras import backend as K
 K.set_image_data_format('channels_last')
 from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard
+from tensorflow.keras.callbacks import ModelCheckpoint, TensorBoard, LearningRateScheduler
 from tensorflow.keras.optimizers import SGD
 
 # Load Scipy, Numpy and Matplotlib libraries
@@ -38,13 +38,24 @@ import models
 # constant definitions
 IMAGE_SIZE  = 96
 DATA_PATH   = '../../data/'
-SAVE_PATH   = '../results/'
-TB_LOG_PATH = '../TB_logs'
+SAVE_PATH   = '../../results/'
+TB_LOG_PATH = '../../TB_logs'
+
+################################################################################
+
+def adaptive_LR_schedule(ep, lr):
+    """
+    DESCRIPTION: Lowers the learning rate every epoch. Constructed so that
+    learning rate has halved after 10 epochs.
+    """
+    c = 0.0693;
+    return lr*tf.math.exp(-c)
 
 ################################################################################
 
 def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=10, \
-                        train_fraction=1, val_fraction=1, pred_threshold=0.5):
+                        train_fraction=1, val_fraction=1, adaptive_LR=False, \
+                        pred_threshold=0.5):
     """
     DESCRIPTION: This function trains and evaluates the CNN.
 
@@ -85,7 +96,11 @@ def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=10, 
     # Define the model checkpoint and TensorBoard callbacks
     checkpoint = ModelCheckpoint(weights_filepath, monitor='val_loss', verbose=1, save_best_only=True, mode='min')
     tensorboard = TensorBoard(os.path.join(TB_LOG_PATH, model_name))
-    callbacks_list = [checkpoint, tensorboard]
+    lr_schedule = LearningRateScheduler(adaptive_LR_schedule, verbose=0)
+    if adaptive_LR:
+        callbacks_list = [checkpoint, tensorboard, lr_schedule]
+    else:
+        callbacks_list = [checkpoint, tensorboard]
 
     # Define the number of training samples to use during a single epoch, and
     # the number of validation samples validated on per epoch.
@@ -123,17 +138,29 @@ def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=10, 
 
 if __name__ == "__main__":
     # SHORT TEST
-    test = models.CNN_01(2, 4, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    train_and_evaluate(test, 'test', save_folder = SAVE_PATH, train_fraction=0.01, val_fraction=0.1)
+    #test = models.CNN_01(2, 4, optimizer=SGD, lr=0.01, momentum=0.95)  # default
+    #train_and_evaluate(test, 'test', save_folder = SAVE_PATH, train_fraction=0.01, val_fraction=0.1)
 
     # BASELINE
+    #model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
+    #train_and_evaluate(model1, 'model_01', save_folder = SAVE_PATH)
+
+    # EXTRA CONV + MP LAYER
+    #model2 = models.CNN_02(32, 32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
+    #train_and_evaluate(model2, 'model_02', save_folder = SAVE_PATH)
+
+    # EXTRA CONV IN EACH LAYER
+    #model3 = models.CNN_03(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
+    #train_and_evaluate(model3, 'model_03', save_folder = SAVE_PATH)
+
+    # ADAPTIVE LEARNING RATES
     model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    train_and_evaluate(model1, 'model_01', save_folder = SAVE_PATH)
+    train_and_evaluate(model1, 'model_01_ALR', save_folder = SAVE_PATH, adaptive_LR=True)
 
     # EXTRA CONV + MP LAYER
     model2 = models.CNN_02(32, 32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    train_and_evaluate(model2, 'model_02', save_folder = SAVE_PATH)
+    train_and_evaluate(model2, 'model_02_ALR', save_folder = SAVE_PATH, adaptive_LR=True)
 
     # EXTRA CONV IN EACH LAYER
     model3 = models.CNN_03(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    train_and_evaluate(model3, 'model_03', save_folder = SAVE_PATH)
+    train_and_evaluate(model3, 'model_03_ALR', save_folder = SAVE_PATH, adaptive_LR=True)
