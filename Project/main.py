@@ -80,6 +80,9 @@ def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=10, 
     -------
     model:       The fitted model is returned.
     """
+    save_folder = os.path.join(save_folder, model_name);
+    if not os.path.exists(save_folder):
+        os.makedirs(save_folder)
 
     # Get the data generators
     train_gen, val_gen, val_gen_no_shuffle = get_generators(DATA_PATH)
