@@ -14,7 +14,7 @@ from matplotlib.pyplot import imread
 from tensorflow.keras.models import model_from_json
 
 #Change these variables to point at the locations and names of the test dataset and your models.
-DATA_PATH = '../../data/'
+DATA_PATH = '../../data/test/'
 RESULT_PATH = '../../results/'
 
 def submission(model_name):
@@ -56,7 +56,7 @@ def submission(model_name):
 
     # save your submission
     #submission.head()
-    submission.to_csv(f"submission_{model_name}.csv", index = False, header = True)
+    submission.to_csv(os.path.join(RESULT_PATH, 'kaggle_submissions', f"submission_{model_name}.csv"), index = False, header = True)
 
 
 if __name__ == '__main__':
