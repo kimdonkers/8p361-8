@@ -66,10 +66,13 @@ def CNN_01(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
 def CNN_02(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
             optimizer=SGD, lr=0.01, momentum=0.95):
     """
-    DESCRIPTION: This function defines the default CNN architecture:
+    DESCRIPTION: This function defines this CNN architecture:
 
-    Conv2D --> MaxPool2D --> Conv2D --> MaxPool2D --> Flatten --> Dense --> Dense
-     ReLU                     ReLU                                ReLU     sigmoid
+    Conv2D --> MaxPool2D --> Conv2D --> MaxPool2D -->  Conv2D --> MaxPool2D -->
+     ReLU                     ReLU                      ReLU
+
+    Flatten --> Dense --> Dense
+                 ReLU     sigmoid
 
     Parameters:
     ----------
@@ -100,10 +103,13 @@ def CNN_02(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
 def CNN_03(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
             optimizer=SGD, lr=0.01, momentum=0.95):
     """
-    DESCRIPTION: This function defines the default CNN architecture:
+    DESCRIPTION: This function defines this CNN architecture:
 
-    Conv2D --> MaxPool2D --> Conv2D --> MaxPool2D --> Flatten --> Dense --> Dense
-     ReLU                     ReLU                                ReLU     sigmoid
+    Conv2D --> Conv2D --> MaxPool2D --> Conv2D --> Conv2D --> MaxPool2D -->
+     ReLU       ReLU                     ReLU       ReLU
+
+    Flatten --> Dense --> Dense
+                 ReLU     sigmoid
 
     Parameters:
     ----------
@@ -120,6 +126,129 @@ def CNN_03(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.add(MaxPool2D(pool_size = maxpool_kernel))
     model.add(Conv2D(filter2, conv_kernel, activation = 'relu', padding = 'same'))
     model.add(Conv2D(filter2, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Flatten())
+    model.add(Dense(64, activation = 'relu'))
+    model.add(Dense(1, activation = 'sigmoid'))
+
+    # compile and return the model
+    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    return model
+
+################################################################################
+
+def CNN_04(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
+            optimizer=SGD, lr=0.01, momentum=0.95):
+    """
+    DESCRIPTION: This function defines this CNN architecture:
+
+    Conv2D --> Conv2D --> MaxPool2D --> Conv2D --> Conv2D --> MaxPool2D -->
+     ReLU       ReLU                     ReLU       ReLU
+
+    Conv2D --> Conv2D --> MaxPool2D --> Flatten --> Dense --> Dense
+     ReLU       ReLU                                 ReLU     sigmoid
+
+    Parameters:
+    ----------
+    TO BE ADDED
+
+    Returns
+    -------
+    None
+    """
+    # build the model
+    model = keras.Sequential()
+    model.add(Conv2D(filter1, conv_kernel, activation = 'relu', padding = 'same', input_shape = (IMAGE_SIZE, IMAGE_SIZE, 3)))
+    model.add(Conv2D(filter1, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Conv2D(filter2, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(Conv2D(filter2, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Conv2D(filter3, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(Conv2D(filter3, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Flatten())
+    model.add(Dense(64, activation = 'relu'))
+    model.add(Dense(1, activation = 'sigmoid'))
+
+    # compile and return the model
+    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    return model
+
+################################################################################
+
+def FCN_05(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
+                    optimizer=SGD, lr=0.01, momentum=0.95):
+    """
+    DESCRIPTION: This function defines a Fully Convolutional architecture:
+
+    Conv2D --> MaxPool2D --> Conv2D --> MaxPool2D --> Conv2D --> MaxPool2D -->
+     ReLU                     ReLU                     ReLU
+
+     Conv2D  --> Flatten
+    sigmoid
+
+    Parameters:
+    ----------
+    TO BE ADDED
+
+    Returns
+    -------
+    None
+    """
+    # build the model
+    model = keras.Sequential()
+    model.add(Conv2D(filter1, conv_kernel, activation = 'relu', padding = 'same', input_shape = (IMAGE_SIZE, IMAGE_SIZE, 3)))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Conv2D(filter2, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Conv2D(filter3, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Conv2D(1, (1,1), activation = 'sigmoid', padding = 'same'))
+    model.add(Flatten())
+    model.summary()
+
+    # compile and return the model
+    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    return model
+
+################################################################################
+
+def CNN_06(filter1, filter2, filter3, filter4, conv_kernel=(3,3), maxpool_kernel=(4,4), \
+            optimizer=SGD, lr=0.01, momentum=0.95):
+    """
+    DESCRIPTION: This function defines this CNN architecture:
+
+    Conv2D --> Conv2D --> MaxPool2D --> Conv2D --> Conv2D --> MaxPool2D -->
+     ReLU       ReLU                     ReLU       ReLU
+
+    Conv2D --> Conv2D --> MaxPool2D --> Conv2D --> Conv2D --> MaxPool2D -->
+     ReLU       ReLU                     ReLU       ReLU
+
+    Flatten --> Dense --> Dense
+                ReLU     sigmoid
+
+    Parameters:
+    ----------
+    TO BE ADDED
+
+    Returns
+    -------
+    None
+    """
+    # build the model
+    model = keras.Sequential()
+    model.add(Conv2D(filter1, conv_kernel, activation = 'relu', padding = 'same', input_shape = (IMAGE_SIZE, IMAGE_SIZE, 3)))
+    model.add(Conv2D(filter1, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Conv2D(filter2, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(Conv2D(filter2, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Conv2D(filter3, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(Conv2D(filter3, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(MaxPool2D(pool_size = maxpool_kernel))
+    model.add(Conv2D(filter4, conv_kernel, activation = 'relu', padding = 'same'))
+    model.add(Conv2D(filter4, conv_kernel, activation = 'relu', padding = 'same'))
     model.add(MaxPool2D(pool_size = maxpool_kernel))
     model.add(Flatten())
     model.add(Dense(64, activation = 'relu'))

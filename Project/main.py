@@ -53,7 +53,7 @@ def adaptive_LR_schedule(ep, lr):
 
 ################################################################################
 
-def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=10, \
+def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=25, \
                         train_fraction=1, val_fraction=1, adaptive_LR=False, \
                         pred_threshold=0.5):
     """
@@ -140,30 +140,4 @@ def train_and_evaluate(model, model_name='CNN', save_folder='./', nr_epochs=10, 
 ################################################################################
 
 if __name__ == "__main__":
-    # SHORT TEST
-    #test = models.CNN_01(2, 4, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    #train_and_evaluate(test, 'test', save_folder = SAVE_PATH, train_fraction=0.01, val_fraction=0.1)
-
-    # BASELINE
-    #model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    #train_and_evaluate(model1, 'model_01', save_folder = SAVE_PATH)
-
-    # EXTRA CONV + MP LAYER
-    #model2 = models.CNN_02(32, 32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    #train_and_evaluate(model2, 'model_02', save_folder = SAVE_PATH)
-
-    # EXTRA CONV IN EACH LAYER
-    #model3 = models.CNN_03(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    #train_and_evaluate(model3, 'model_03', save_folder = SAVE_PATH)
-
-    # ADAPTIVE LEARNING RATES
-    model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    train_and_evaluate(model1, 'model_01_ALR', save_folder = SAVE_PATH, adaptive_LR=True)
-
-    # EXTRA CONV + MP LAYER
-    model2 = models.CNN_02(32, 32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    train_and_evaluate(model2, 'model_02_ALR', save_folder = SAVE_PATH, adaptive_LR=True)
-
-    # EXTRA CONV IN EACH LAYER
-    model3 = models.CNN_03(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)  # default
-    train_and_evaluate(model3, 'model_03_ALR', save_folder = SAVE_PATH, adaptive_LR=True)
+    pass;
