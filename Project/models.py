@@ -58,7 +58,10 @@ def CNN_01(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.add(Dense(1, activation = 'sigmoid'))
 
     # compile and return the model
-    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    if momentum is not None:
+        model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    else:
+        model.compile(optimizer(lr=lr), loss = 'binary_crossentropy', metrics=['accuracy'])
     return model
 
 ################################################################################
@@ -95,7 +98,10 @@ def CNN_02(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.add(Dense(1, activation = 'sigmoid'))
 
     # compile and return the model
-    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    if momentum is not None:
+        model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    else:
+        model.compile(optimizer(lr=lr), loss = 'binary_crossentropy', metrics=['accuracy'])
     return model
 
 ################################################################################
@@ -132,7 +138,10 @@ def CNN_03(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.add(Dense(1, activation = 'sigmoid'))
 
     # compile and return the model
-    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    if momentum is not None:
+        model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    else:
+        model.compile(optimizer(lr=lr), loss = 'binary_crossentropy', metrics=['accuracy'])
     return model
 
 ################################################################################
@@ -172,7 +181,10 @@ def CNN_04(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.add(Dense(1, activation = 'sigmoid'))
 
     # compile and return the model
-    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    if momentum is not None:
+        model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    else:
+        model.compile(optimizer(lr=lr), loss = 'binary_crossentropy', metrics=['accuracy'])
     return model
 
 ################################################################################
@@ -209,12 +221,15 @@ def FCN_05(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.summary()
 
     # compile and return the model
-    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    if momentum is not None:
+        model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    else:
+        model.compile(optimizer(lr=lr), loss = 'binary_crossentropy', metrics=['accuracy'])
     return model
 
 ################################################################################
 
-def CNN_06(filter1, filter2, filter3, filter4, conv_kernel=(3,3), maxpool_kernel=(4,4), \
+def CNN_06(filter1, filter2, filter3, filter4, conv_kernel=(3,3), maxpool_kernel=(2,2), \
             optimizer=SGD, lr=0.01, momentum=0.95):
     """
     DESCRIPTION: This function defines this CNN architecture:
@@ -255,7 +270,10 @@ def CNN_06(filter1, filter2, filter3, filter4, conv_kernel=(3,3), maxpool_kernel
     model.add(Dense(1, activation = 'sigmoid'))
 
     # compile and return the model
-    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    if momentum is not None:
+        model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    else:
+        model.compile(optimizer(lr=lr), loss = 'binary_crossentropy', metrics=['accuracy'])
     return model
 
 ################################################################################
@@ -274,6 +292,10 @@ def transfer_01(optimizer=SGD, lr=0.001, momentum=0.95, pretrained_weights='imag
     model = Model(input, output)
 
     # compile and return the model
-    model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    if momentum is not None:
+        model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    else:
+        model.compile(optimizer(lr=lr), loss = 'binary_crossentropy', metrics=['accuracy'])
+    return model
 
 ################################################################################
