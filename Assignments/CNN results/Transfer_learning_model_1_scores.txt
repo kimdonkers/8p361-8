@@ -1,0 +1,3 @@
+AUC score      = 0.980834421875
+F1 score       = 0.9319196428571429
+Accuracy score = 0.931375
