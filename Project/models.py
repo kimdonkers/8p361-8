@@ -22,8 +22,9 @@ from tensorflow.keras import backend as K
 K.set_image_data_format('channels_last')
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, Dense, Flatten, Conv2D, MaxPool2D, \
-                                        GlobalAveragePooling2D
+                                        GlobalAveragePooling2D, Dropout
 from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2, preprocess_input
+from tensorflow.keras.applications.inception_v3 import InceptionV3
 from tensorflow.keras.optimizers import SGD
 
 # constant definitions
@@ -32,7 +33,7 @@ IMAGE_SIZE = 96
 ################################################################################
 
 def CNN_01(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
-            optimizer=SGD, lr=0.01, momentum=0.95):
+            optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0.5):
     """
     DESCRIPTION: This function defines the default CNN architecture:
 
@@ -54,6 +55,7 @@ def CNN_01(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.add(Conv2D(filter2, conv_kernel, activation = 'relu', padding = 'same'))
     model.add(MaxPool2D(pool_size = maxpool_kernel))
     model.add(Flatten())
+    model.add(Dropout(dropout_frac))
     model.add(Dense(64, activation = 'relu'))
     model.add(Dense(1, activation = 'sigmoid'))
 
@@ -67,7 +69,7 @@ def CNN_01(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
 ################################################################################
 
 def CNN_02(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
-            optimizer=SGD, lr=0.01, momentum=0.95):
+            optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0.5):
     """
     DESCRIPTION: This function defines this CNN architecture:
 
@@ -94,6 +96,7 @@ def CNN_02(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.add(Conv2D(filter3, conv_kernel, activation = 'relu', padding = 'same'))
     model.add(MaxPool2D(pool_size = maxpool_kernel))
     model.add(Flatten())
+    model.add(Dropout(dropout_frac))
     model.add(Dense(64, activation = 'relu'))
     model.add(Dense(1, activation = 'sigmoid'))
 
@@ -107,7 +110,7 @@ def CNN_02(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
 ################################################################################
 
 def CNN_03(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
-            optimizer=SGD, lr=0.01, momentum=0.95):
+            optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0.5):
     """
     DESCRIPTION: This function defines this CNN architecture:
 
@@ -134,6 +137,7 @@ def CNN_03(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.add(Conv2D(filter2, conv_kernel, activation = 'relu', padding = 'same'))
     model.add(MaxPool2D(pool_size = maxpool_kernel))
     model.add(Flatten())
+    model.add(Dropout(dropout_frac))
     model.add(Dense(64, activation = 'relu'))
     model.add(Dense(1, activation = 'sigmoid'))
 
@@ -147,7 +151,7 @@ def CNN_03(filter1, filter2, conv_kernel=(3,3), maxpool_kernel=(4,4), \
 ################################################################################
 
 def CNN_04(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
-            optimizer=SGD, lr=0.01, momentum=0.95):
+            optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0.5):
     """
     DESCRIPTION: This function defines this CNN architecture:
 
@@ -177,6 +181,7 @@ def CNN_04(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
     model.add(Conv2D(filter3, conv_kernel, activation = 'relu', padding = 'same'))
     model.add(MaxPool2D(pool_size = maxpool_kernel))
     model.add(Flatten())
+    model.add(Dropout(dropout_frac))
     model.add(Dense(64, activation = 'relu'))
     model.add(Dense(1, activation = 'sigmoid'))
 
@@ -230,7 +235,7 @@ def FCN_05(filter1, filter2, filter3, conv_kernel=(3,3), maxpool_kernel=(4,4), \
 ################################################################################
 
 def CNN_06(filter1, filter2, filter3, filter4, conv_kernel=(3,3), maxpool_kernel=(2,2), \
-            optimizer=SGD, lr=0.01, momentum=0.95):
+            optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0.5):
     """
     DESCRIPTION: This function defines this CNN architecture:
 
@@ -266,6 +271,7 @@ def CNN_06(filter1, filter2, filter3, filter4, conv_kernel=(3,3), maxpool_kernel
     model.add(Conv2D(filter4, conv_kernel, activation = 'relu', padding = 'same'))
     model.add(MaxPool2D(pool_size = maxpool_kernel))
     model.add(Flatten())
+    model.add(Dropout(dropout_frac))
     model.add(Dense(64, activation = 'relu'))
     model.add(Dense(1, activation = 'sigmoid'))
 
@@ -278,16 +284,44 @@ def CNN_06(filter1, filter2, filter3, filter4, conv_kernel=(3,3), maxpool_kernel
 
 ################################################################################
 
-def transfer_01(optimizer=SGD, lr=0.001, momentum=0.95, pretrained_weights='imagenet'):
+def transfer_MobileNetV2(optimizer=SGD, lr=0.001, momentum=0.95, pretrained_weights='imagenet', freeze=False, dropout_frac=0.5):
     # build the model
     input = Input((IMAGE_SIZE, IMAGE_SIZE, 3))
     pretrained = MobileNetV2(input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3), include_top=False, weights=pretrained_weights)
-    # Freeze the feature-extracting layers of the pretrained model (disabled)
-    #for layer in pretrained.layers:
-    #    layer.trainable = False
+    # Freeze the feature-extracting layers of the pretrained model
+    
+    if freeze:
+        for layer in pretrained.layers:
+            layer.trainable = False
     output = pretrained(input)
     output = GlobalAveragePooling2D()(output)
-    output = Dropout(0.5)(output)
+    output = Dropout(dropout_frac)(output)
+    output = Dense(64, activation='sigmoid')(output)
+    output = Dense(1, activation='sigmoid')(output)
+    model = Model(input, output)
+
+    # compile and return the model
+    if momentum is not None:
+        model.compile(optimizer(lr=lr, momentum=momentum), loss = 'binary_crossentropy', metrics=['accuracy'])
+    else:
+        model.compile(optimizer(lr=lr), loss = 'binary_crossentropy', metrics=['accuracy'])
+    return model
+
+################################################################################
+
+def transfer_InceptionV3(optimizer=SGD, lr=0.001, momentum=0.95, pretrained_weights='imagenet', freeze=False, dropout_frac=0.5):
+    # build the model
+    input = Input((IMAGE_SIZE, IMAGE_SIZE, 3))
+    pretrained = InceptionV3(input_shape=(IMAGE_SIZE, IMAGE_SIZE, 3), include_top=False, weights=pretrained_weights)
+    # Freeze the feature-extracting layers of the pretrained model
+    
+    if freeze:
+        for layer in pretrained.layers:
+            layer.trainable = False
+    output = pretrained(input)
+    output = GlobalAveragePooling2D()(output)
+    output = Dropout(dropout_frac)(output)
+    output = Dense(64, activation='sigmoid')(output)
     output = Dense(1, activation='sigmoid')(output)
     model = Model(input, output)
 
