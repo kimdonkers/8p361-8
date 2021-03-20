@@ -7,62 +7,62 @@ from tensorflow.keras.optimizers import SGD, Adam
 SAVE_PATH   = '../../results/'
 
 ######################## STATIC LEARNING RATE ##################################
-#model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)
+#model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model1, 'model_01', save_folder = SAVE_PATH)
 
-#model2 = models.CNN_02(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95)
+#model2 = models.CNN_02(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model2, 'model_02', save_folder = SAVE_PATH)
 
-#model3 = models.CNN_03(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)
+#model3 = models.CNN_03(32, 64, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model3, 'model_03', save_folder = SAVE_PATH)
 
-#model4 = models.CNN_04(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95)
+#model4 = models.CNN_04(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model4, 'model_04', save_folder = SAVE_PATH)
 
-#FCN = models.FCN_05(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95)
+#FCN = models.FCN_05(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(FCN, 'model_05', save_folder = SAVE_PATH)
 
-#model6 = models.CNN_06(32, 64, 128, 256, optimizer=SGD, lr=0.01, momentum=0.95)
+#model6 = models.CNN_06(32, 64, 128, 256, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model6, 'model_06', save_folder = SAVE_PATH)
 
 ####################### LEARNING RATE DECAY ####################################
-#model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)
+#model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model1, 'model_01_LRDecay', save_folder = SAVE_PATH, adaptive_LR=True)
 
-#model2 = models.CNN_02(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95)
+#model2 = models.CNN_02(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model2, 'model_02_LRDecay', save_folder = SAVE_PATH, adaptive_LR=True)
 
-#model3 = models.CNN_03(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)
+#model3 = models.CNN_03(32, 64, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model3, 'model_03_LRDecay', save_folder = SAVE_PATH, adaptive_LR=True)
 
-#model4 = models.CNN_04(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95)
+#model4 = models.CNN_04(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model4, 'model_04_LRDecay', save_folder = SAVE_PATH, adaptive_LR=True)
 
-#FCN = models.FCN_05(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95)
+#FCN = models.FCN_05(32, 64, 128, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(FCN, 'model_05_LRDecay', save_folder = SAVE_PATH, adaptive_LR=True)
 
-#model6 = models.CNN_06(32, 64, 128, 256, optimizer=SGD, lr=0.01, momentum=0.95)
+#model6 = models.CNN_06(32, 64, 128, 256, optimizer=SGD, lr=0.01, momentum=0.95, dropout_frac=0)
 #main.train_and_evaluate(model6, 'model_06_LRDecay', save_folder = SAVE_PATH, adaptive_LR=True)
 
 ######################## ADAM OPTIMIZER ########################################
 # NOTE: Adam has a lower (starting) learning rate than SGD, this was based on
 # the default value for the Adam optimizer.
-#model1 = models.CNN_01(32, 64, optimizer=Adam, lr=0.001, momentum=None)
+#model1 = models.CNN_01(32, 64, optimizer=Adam, lr=0.001, momentum=None, dropout_frac=0)
 #main.train_and_evaluate(model1, 'model_01_Adam', save_folder = SAVE_PATH)
 
-#model2 = models.CNN_02(32, 64, 128, optimizer=Adam, lr=0.001, momentum=None)
+#model2 = models.CNN_02(32, 64, 128, optimizer=Adam, lr=0.001, momentum=None, dropout_frac=0)
 #main.train_and_evaluate(model2, 'model_02_Adam', save_folder = SAVE_PATH)
 
-#model3 = models.CNN_03(32, 64, optimizer=Adam, lr=0.001, momentum=None)
+#model3 = models.CNN_03(32, 64, optimizer=Adam, lr=0.001, momentum=None, dropout_frac=0)
 #main.train_and_evaluate(model3, 'model_03_Adam', save_folder = SAVE_PATH)
 
-#model4 = models.CNN_04(32, 64, 128, optimizer=Adam, lr=0.001, momentum=None)
+#model4 = models.CNN_04(32, 64, 128, optimizer=Adam, lr=0.001, momentum=None, dropout_frac=0)
 #main.train_and_evaluate(model4, 'model_04_Adam', save_folder = SAVE_PATH)
 
-#FCN = models.FCN_05(32, 64, 128, optimizer=Adam, lr=0.001, momentum=None)
+#FCN = models.FCN_05(32, 64, 128, optimizer=Adam, lr=0.001, momentum=None, dropout_frac=0)
 #main.train_and_evaluate(FCN, 'model_05_Adam', save_folder = SAVE_PATH)
 
-#model6 = models.CNN_06(32, 64, 128, 256, optimizer=Adam, lr=0.001, momentum=None)
+#model6 = models.CNN_06(32, 64, 128, 256, optimizer=Adam, lr=0.001, momentum=None, dropout_frac=0)
 #main.train_and_evaluate(model6, 'model_06_Adam', save_folder = SAVE_PATH)
 
 
@@ -92,7 +92,7 @@ SAVE_PATH   = '../../results/'
 
 
 
-######################## NU MÉT DROPOUT ###########################################
+######################## NOW WITH DROPOUT ###########################################
 ######################## STATIC LEARNING RATE ##################################
 #model1 = models.CNN_01(32, 64, optimizer=SGD, lr=0.01, momentum=0.95)
 #main.train_and_evaluate(model1, 'model_01', save_folder = SAVE_PATH)
@@ -160,9 +160,7 @@ SAVE_PATH   = '../../results/'
 
 
 
-
-
-################ Hyperparameter search model 4 #################################
+################ Hyperparameter search model 3 #################################
 #hps_save_path = os.path.join(SAVE_PATH, 'HPS_model3');
 
 #filters = [(32,64) ,   (16,32)  ,    (64,128)]
@@ -177,25 +175,25 @@ SAVE_PATH   = '../../results/'
 #            main.train_and_evaluate(model3_HPS, f"model_03_HPS_{i}", save_folder = hps_save_path)
 #            i += 1;
 
-            
+
 # HPS EXPERIMENTS:
-#i=0:   f: 32, 64, 128,  c: (3, 3), m: (2, 2)
-#i=1:   f: 32, 64, 128,  c: (3, 3), m: (4, 4)
-#i=2:   f: 32, 64, 128,  c: (5, 5), m: (2, 2)
-#i=3:   f: 32, 64, 128,  c: (5, 5), m: (4, 4)
-#i=4:   f: 16, 32, 64,   c: (3, 3), m: (2, 2)
-#i=5:   f: 16, 32, 64,   c: (3, 3), m: (4, 4)
-#i=6:   f: 16, 32, 64,   c: (5, 5), m: (2, 2)
-#i=7:   f: 16, 32, 64,   c: (5, 5), m: (4, 4)
-#i=8:   f: 64, 128, 256, c: (3, 3), m: (2, 2)
-#i=9:   f: 64, 128, 256, c: (3, 3), m: (4, 4)
-#i=10:  f: 64, 128, 256, c: (5, 5), m: (2, 2)
-#i=11:  f: 64, 128, 256, c: (5, 5), m: (4, 4)
+#i=0:   f: 32, 64  c: (3, 3), m: (2, 2)
+#i=1:   f: 32, 64  c: (3, 3), m: (4, 4)
+#i=2:   f: 32, 64  c: (5, 5), m: (2, 2)
+#i=3:   f: 32, 64  c: (5, 5), m: (4, 4)
+#i=4:   f: 16, 32  c: (3, 3), m: (2, 2)
+#i=5:   f: 16, 32  c: (3, 3), m: (4, 4)
+#i=6:   f: 16, 32  c: (5, 5), m: (2, 2)
+#i=7:   f: 16, 32  c: (5, 5), m: (4, 4)
+#i=8:   f: 64, 128 c: (3, 3), m: (2, 2)
+#i=9:   f: 64, 128 c: (3, 3), m: (4, 4)
+#i=10:  f: 64, 128 c: (5, 5), m: (2, 2)
+#i=11:  f: 64, 128 c: (5, 5), m: (4, 4)
 
 
 
 
-###### ALTERNATIVES: DROPOUT ######################################################
+###### ALTERNATIVES: DROPOUT = 0.2##############################################
 model4_dp = models.CNN_04(32, 64, 128, optimizer=Adam, lr=0.001, momentum=None, dropout_frac=0.2)
 main.train_and_evaluate(model4_dp, 'model_04_Adam_dropout_20', save_folder = SAVE_PATH)
 
